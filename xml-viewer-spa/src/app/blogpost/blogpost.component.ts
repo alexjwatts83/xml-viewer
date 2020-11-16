@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewChecked  } from '@angular/core';
 import { HighlightService } from '../highlight.service';
+import * as vkbeautify from 'vkbeautify';
 
 @Component({
   selector: 'app-blogpost',
@@ -14,7 +15,8 @@ export class BlogpostComponent implements OnInit, AfterViewChecked  {
   xmlContent = `<pre><code class="language-xml"></code></pre>`;
   highlighted: boolean = false;
   constructor(private highlightService: HighlightService) {
-    let replacedXml = this.xmlData.replace(/\</g,"&lt;");
+    let xmlPretty = vkbeautify.xml(this.xmlData);
+    let replacedXml = xmlPretty.replace(/\</g,"&lt;");
     replacedXml = replacedXml.replace(/\>/g,"&gt;");
     this.xmlContent = `<pre><code class="language-xml">${replacedXml}</code></pre>`;
    }
